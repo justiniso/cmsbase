@@ -3,7 +3,7 @@ mongo:
     ports:
       - "27017:27017"
     volumes:
-      - ./etc/mongodata:/data/db
+      - ./etc/mongodata:/var/db
 
 # elastic:
 #     image: catholabs/elastic-with-marvel
@@ -28,7 +28,7 @@ web:
     command: sh etc/docker_wait_to_start.sh
     environment:
         - QUOKKA_MONGODB_HOST=mongo
-        - WAIT_COMMAND=$(nc -zv mongo 27017)
+        - WAIT_COMMAND=$$(nc -zv mongo 27017)
         - WAIT_START_CMD=python manage.py runserver --host 0.0.0.0 --reloader --debug
         - WAIT_SLEEP=3
         - WAIT_LOOPS=50
